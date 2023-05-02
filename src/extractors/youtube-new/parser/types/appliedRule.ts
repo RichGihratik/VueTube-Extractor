@@ -19,8 +19,8 @@ export type IndexType<Prop extends PropertyRule> =
 type AppliedObjectRuleWithoutCondition<Rule extends ObjectRule> = Expand<
   ObjectProps<
     AppliedFlattenObjectRule< 
-    AppliedRuleAliases<
     RuleKeyRemap<
+    AppliedRuleAliases<
     AppliedJsonPath<
       Rule
     >>>>

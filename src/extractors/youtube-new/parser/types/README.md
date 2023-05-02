@@ -219,7 +219,7 @@ Default and [object expected](#expected-value) values are not compatible.
 
 ## Keymaping [**RD**]
 
-You can remap some of the properties of the object rule, which can be useful in case of [**Aliases**](#property-aliases) to prevent naming collisions and for API compatibility:
+You can remap some of the properties of the object rule for API compatibility:
 
 ```typescript
 const rule = {
@@ -271,41 +271,6 @@ let item = parse(obj, rule);
 //     ^--{ 
 //          remappedProp?: string;
 //          aliasProp?: string;
-//          anotherProp?: string;
-//          defaultProp: number;
-//        }
-```
-
-### Caveats
-
-Aliases applied **after** [keymapping](#keymaping-rd), so it is possible to remap current property to prevent name collision:
-
-```typescript
-// This code will work correctly and it will not cause an error
-
-const rule = {
-  type: 'object',
-  keymap: {
-    prop: 'remappedProp',
-  },
-  properties: {
-    prop: {
-      type: 'string',
-      aliases: ['prop', 'anotherProp'],
-      required: false,
-    },
-    defaultProp: {
-      type: 'number',
-    }
-  }
-} as const satisfies Rule;
-
-// ...
-
-let item = parse(obj, rule);
-//     ^--{ 
-//          remappedProp?: string;
-//          prop?: string;
 //          anotherProp?: string;
 //          defaultProp: number;
 //        }

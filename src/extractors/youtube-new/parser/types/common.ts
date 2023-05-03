@@ -1,8 +1,17 @@
+export enum EParserTypes {
+  String = 'string',
+  Number = 'number',
+  Boolean = 'boolean',
+  Any = 'any',
+  Object = 'object',
+  Array = 'array'
+} 
+
 export type TypeMap = {
-  string: string;
-  number: number;
-  boolean: boolean;
-  any: any;
+  [EParserTypes.String]: string;
+  [EParserTypes.Number]: number;
+  [EParserTypes.Boolean]: boolean;
+  [EParserTypes.Any]: any;
 };
 
 export type IndexTypeMap<Key> = 
@@ -13,7 +22,7 @@ export type IndexTypeMap<Key> =
 export type ConditionalFn = (item: any) => boolean;
 
 export interface ObjectRule {
-  type: 'object';
+  type: EParserTypes.Object;
   strict?: boolean;
   flatten?: boolean;
   flattenAll?: boolean;
@@ -23,8 +32,9 @@ export interface ObjectRule {
 }
 
 export interface ArrayRule {
-  type: 'array';
+  type: EParserTypes.Array;
   limit?: number;
+  strict?: boolean;
   items: Rule;
   condition?: ConditionalFn;
 }

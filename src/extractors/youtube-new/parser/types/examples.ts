@@ -1,21 +1,21 @@
-import type { Rule } from "./common";
+import { type Rule, EParserTypes } from "./common";
 import type { AppliedRule } from "./appliedRule";
 
 // Rewritten continuation rule from "../../rules/continuations.const.ts"
 
 const continuation = {
-  type: 'object',
+  type: EParserTypes.Object,
   properties: {
     continuation: {
-      type: 'string',
+      type: EParserTypes.String,
     },
   },
 } as const satisfies Rule;
 
 export const CONTINUATIONS = {
-  type: 'array',
+  type: EParserTypes.Array,
   items: {
-    type: 'object',
+    type: EParserTypes.Object,
     properties: {
       nextContinuationData: {
         ...continuation,
@@ -28,25 +28,25 @@ export const CONTINUATIONS = {
 // Examples
 
 const subRule = {
-  type: 'object',
+  type: EParserTypes.Object,
   properties: {
     item: {
-      type: 'number',
+      type: EParserTypes.Number,
       default: 3,
     },
     item2: {
       required: true,
-      type: 'object',
+      type: EParserTypes.Object,
       properties: {
         prop1: {
-          type: 'string',
+          type: EParserTypes.String,
           default: 'someDefault',
         },
         prop2: {
-          type: 'object',
+          type: EParserTypes.Object,
           properties: {
             prop: {
-              type: 'number',
+              type: EParserTypes.Number,
               default: 4
             }
           }
@@ -57,7 +57,7 @@ const subRule = {
 } as const satisfies Rule;
 
 const rule = {
-  type: 'object',
+  type: EParserTypes.Object,
   flatten: true,
   keymap: {
     continuation: 'remapedContuniation',
@@ -65,26 +65,25 @@ const rule = {
   },
   properties: {
     "obj.another.arr[0].obj": {
-      type: 'string',
+      type: EParserTypes.String,
       required: true,
     },
     obj: {
-      type: 'object',
+      type: EParserTypes.Object,
       properties: {
         prop: {
-          type: 'number'
+          type: EParserTypes.Number
         }
       }
     },
     continuation: {
       aliases: ['contAlias'],
-      type: 'string',
+      type: EParserTypes.String,
       required: true,
       default: '',
     },
     reloadContinuationData: {
-      aliases: ['continuation'],
-      type: 'number',
+      type: EParserTypes.Number,
       required: false,
     },
     nonPrimitive: {

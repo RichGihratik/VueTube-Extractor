@@ -1,4 +1,4 @@
-import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
+import type { ObjectRule, PropertyRule, ObjectRuleProps, EParserTypes } from "./common";
 import type { PickNever } from "./utils";
 
 type ArraySeparator = '[0]';
@@ -16,16 +16,16 @@ type Extract<Key extends string | number | symbol, Prop extends PropertyRule> =
   Key extends `${infer Prefix}${ObjectSeparator}${infer Postfix}` ?
   Prefix extends `${string | number}${ArraySeparator}` ?
   { 
-    type: 'array',
+    type: EParserTypes.Array,
     items: {
-      type: 'object';
+      type: EParserTypes.Object;
       properties: {
         [Key in ExtractKey<Postfix>]: Extract<Postfix, Prop>
       }
     }
   } :
   { 
-    type: 'object',
+    type: EParserTypes.Object,
     properties: {
       [Key in ExtractKey<Postfix>]: Extract<Postfix, Prop>
     }

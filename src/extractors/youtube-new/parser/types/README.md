@@ -14,7 +14,7 @@ This documentation for rewritten parser, based on the original rule concept, but
 
 ## What is rule?
 
-Rule is a config object, which defines how the input data will be transformed and what data will be extracted after parsing responce. 
+Rule is a config object, which defines how the input data will be transformed and what data will be extracted after parsing response. 
 
 Rule can be used for 3 reasons:
 

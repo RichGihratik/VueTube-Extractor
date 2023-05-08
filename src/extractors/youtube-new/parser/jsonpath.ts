@@ -1,5 +1,5 @@
-const OBJ_SEP = '.';
-const ARRAY_SEP = ['[', ']'];
+export const OBJ_SEP = '.';
+export const ARRAY_SEP = ['[', ']'] as const;
 
 type ParsedBrackets = {
   propName: string;
@@ -13,9 +13,10 @@ export function parseBrackets(propKey: string): ParsedBrackets {
 
   if (propIndexes.length > 0) {
     result.indexes = propIndexes.split(
-      ARRAY_SEP.reverse()
-               .join(''))
-               .map(item => (isNaN(parseInt(item)) ? item : parseInt(item))
+      ARRAY_SEP.slice()
+               .reverse()
+               .join('')
+      ).map(item => (isNaN(parseInt(item)) ? item : parseInt(item))
     );
   }
 

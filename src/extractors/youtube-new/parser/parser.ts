@@ -3,16 +3,14 @@ import type { Rule, AppliedRule, ObjectToParse, ArrayToParse, PipelineItem, Pipe
 import { applyCondition } from './condition';
 import { applyAliases } from './aliases';
 import { parseProps } from './props';
-import { unwrapJsonpath } from './jsonpath';
 import { applyRemap } from './remap';
 import { applyFlatten } from './flatten';
 
 // Define all pipeline functions here in order
 const PIPELINE_FNS: PipelineFn[] = [
-  applyCondition,
   applyAliases,
-  unwrapJsonpath,
   parseProps,
+  applyCondition,
   applyRemap,
   applyFlatten
 ];

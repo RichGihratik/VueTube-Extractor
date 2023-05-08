@@ -1,7 +1,41 @@
-import type { ObjectToParse, ArrayToParse, PipelineItem, PipelineFn } from './types';
-import { isObject, isArray } from './typeguards';
+const OBJ_SEP = '.';
+const ARRAY_SEP = ['[', ']'];
 
-export const unwrapJsonpath: PipelineFn = function (item: PipelineItem) {
-  // TODO: Implement jsonpath
-  return item;
+type ParsedBrackets = {
+  propName: string;
+  indexes: (number | string)[];
 };
+
+export function parseBrackets(propKey: string): ParsedBrackets {
+  const propName = propKey.endsWith(ARRAY_SEP[1]) ? propKey.split(ARRAY_SEP[0])[0] : propKey;
+  const result: ParsedBrackets = { propName, indexes: [] };
+  const propIndexes = propKey.slice(propName.length + 1, propKey.length - 1);
+
+  if (propIndexes.length > 0) {
+    result.indexes = propIndexes.split(
+      ARRAY_SEP.reverse()
+               .join(''))
+               .map(item => (isNaN(parseInt(item)) ? item : parseInt(item))
+    );
+  }
+
+  return result;
+}
+
+export function jsonPathToObject(path: string, obj: any): unknown {
+  const pathArray = path.split(OBJ_SEP);
+  let current = obj;
+  for (const key of pathArray) {
+    if (current === undefined) {
+      return undefined;
+    } else {
+      const parsedKey = parseBrackets(key);
+      current = current[parsedKey.propName];
+      for (const index of parsedKey.indexes) {
+        if (current === undefined) return undefined;
+        current = current[index];
+      }
+    }
+  }
+  return current;
+}

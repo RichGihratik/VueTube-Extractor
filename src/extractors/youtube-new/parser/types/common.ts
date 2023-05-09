@@ -1,3 +1,6 @@
+// Available types enum
+// =======================
+
 export enum EParserTypes {
   String = 'string',
   Number = 'number',
@@ -7,17 +10,9 @@ export enum EParserTypes {
   Array = 'array'
 } 
 
-export type TypeMap = {
-  [EParserTypes.String]: string;
-  [EParserTypes.Number]: number;
-  [EParserTypes.Boolean]: boolean;
-  [EParserTypes.Any]: any;
-};
 
-export type IndexTypeMap<Key> = 
-  Key extends keyof TypeMap ?
-  TypeMap[Key] :
-  never;
+// Common rule
+// =======================
 
 export type ConditionalFn = (item: any) => boolean;
 
@@ -35,27 +30,48 @@ export interface ArrayRule {
   type: EParserTypes.Array;
   limit?: number;
   strict?: boolean;
-  items: Rule;
+  items: Rule | Primitive;
   condition?: ConditionalFn;
 }
 
 export type Rule = ObjectRule | ArrayRule;
+
+
+// Primitives
+// =======================
+
+export type TypeMap = {
+  [EParserTypes.String]: string;
+  [EParserTypes.Number]: number;
+  [EParserTypes.Boolean]: boolean;
+  [EParserTypes.Any]: any;
+};
+
+export type IndexTypeMap<Key> = 
+  Key extends keyof TypeMap ?
+  TypeMap[Key] :
+  never;
+
+type PrimitiveBase<Key extends keyof TypeMap> = { type: Key }; 
+
+type Primitive = { [Key in keyof TypeMap]: PrimitiveBase<Key> }[keyof TypeMap] | keyof TypeMap;
+
+
+// Property rules
+// =======================
 
 type PropertyBase = {
   required?: boolean;
   aliases?: readonly string[];
 }
 
-type MappedPrimitive<Key extends keyof TypeMap> = PropertyBase & ({
-  type: Key;
+type MappedPrimitive<Key extends keyof TypeMap> = PropertyBase & PrimitiveBase<Key> & ({
   default: TypeMap[Key];
   expected?: never;
 } | {
-  type: Key;
   default?: never;
   expected: TypeMap[Key];
 } | {
-  type: Key;
   default?: never;
   expected?: never;
 });

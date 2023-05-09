@@ -6,9 +6,7 @@ import type { AppliedRule } from "./appliedRule";
 const continuation = {
   type: EParserTypes.Object,
   properties: {
-    continuation: {
-      type: EParserTypes.String,
-    },
+    continuation: EParserTypes.String,
   },
 } as const satisfies Rule;
 
@@ -39,6 +37,7 @@ const subRule = {
       type: EParserTypes.Object,
       properties: {
         prop1: {
+          aliases: ['prop3'],
           type: EParserTypes.String,
           default: 'someDefault',
         },
@@ -58,7 +57,7 @@ const subRule = {
 
 const rule = {
   type: EParserTypes.Object,
-  flatten: true,
+  //flatten: true,
   keymap: {
     continuation: 'remapedContuniation',
     nonPrimitive: 'remapedNonPrimitive',
@@ -66,14 +65,11 @@ const rule = {
   properties: {
     "obj.another.arr[0].obj": {
       type: EParserTypes.String,
-      required: true,
     },
     obj: {
       type: EParserTypes.Object,
       properties: {
-        prop: {
-          type: EParserTypes.Number
-        }
+        prop: EParserTypes.Number
       }
     },
     continuation: {

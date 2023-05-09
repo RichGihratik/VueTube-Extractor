@@ -1,4 +1,4 @@
-import type { PropertyRule, ObjectRule, ArrayRule, TypeMap, Rule } from "./common";
+import type { PropertyRule, ObjectRule, ArrayRule, TypeMap, Rule, PrimitivePropertyRule } from "./common";
 import type { RuleKeyRemap } from "./remap";
 import type { ObjectProps } from "./objectProps";
 import type { AppliedCondition } from "./condition";
@@ -7,7 +7,9 @@ import type { AppliedFlattenObjectRule } from "./flaten";
 import type { Expand } from "./utils";
 
 export type IndexType<Prop extends PropertyRule> = 
-  Prop['type'] extends keyof TypeMap ? 
+  Prop extends keyof TypeMap ?
+  TypeMap[Prop] :
+  Prop extends PrimitivePropertyRule ? 
   TypeMap[Prop['type']] :
   Prop extends ObjectRule ?
   AppliedObjectRule<Prop> :

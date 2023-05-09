@@ -1,8 +1,10 @@
-import type { ObjectRule, ConditionalFn, ObjectRuleProps, IndexTypeMap } from './common';
+import type { ObjectRule, ConditionalFn, ObjectRuleProps, IndexTypeMap, PrimitivePropertyRule } from './common';
 
 type ConditionalKeysSet<Rule extends ObjectRule> = keyof {
-  [Key in keyof ObjectRuleProps<Rule> as ObjectRuleProps<Rule>[Key] extends { expected: IndexTypeMap<ObjectRuleProps<Rule>[Key]['type']> }
-    ? Key
+  [Key in keyof ObjectRuleProps<Rule> as ObjectRuleProps<Rule>[Key] extends PrimitivePropertyRule
+    ? ObjectRuleProps<Rule>[Key] extends { expected: IndexTypeMap<ObjectRuleProps<Rule>[Key]['type']> }
+      ? Key
+      : never
     : never]: unknown;
 };
 

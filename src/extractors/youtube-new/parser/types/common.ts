@@ -60,7 +60,7 @@ type MappedPrimitive<Key extends keyof TypeMap> = PropertyBase & ({
   expected?: never;
 });
 
-type PrimitivePropertyRule = {
+export type PrimitivePropertyRule = {
   [Key in keyof TypeMap]: MappedPrimitive<Key>
 }[keyof TypeMap];
 
@@ -68,6 +68,6 @@ export type ObjectPropertyRule  = ObjectRule & PropertyBase;
 
 type ArrayPropertyRule = ArrayRule & PropertyBase;
 
-export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule;
+export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule | keyof TypeMap;
 
 export type ObjectRuleProps<Rule extends ObjectRule> = Rule['properties'];

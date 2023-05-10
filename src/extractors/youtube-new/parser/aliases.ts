@@ -7,7 +7,7 @@ function applyToObject(rule: ObjectRule) {
   for (const key in rule.properties) {
     const ruleProp = rule.properties[key];
 
-    if (isPrimitiveKey(ruleProp)) return;
+    if (isPrimitiveKey(ruleProp)) continue;
 
     // Recursive rule application
     if (ruleProp.type === ETypes.Array) applyToArray(ruleProp);

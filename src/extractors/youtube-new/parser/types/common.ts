@@ -60,7 +60,7 @@ type Primitive = { [Key in keyof TypeMap]: PrimitiveBase<Key> }[keyof TypeMap] |
 // Property rules
 // =======================
 
-type PropertyBase = {
+export type PropertyBase = {
   required?: boolean;
   aliases?: readonly string[];
 }

@@ -1,4 +1,5 @@
 import { type PipelineItem, type PipelineFn, type ArrayRule, type ObjectRule, EParserTypes as ETypes } from './types';
+import { isPrimitiveKey } from "./typeguards";
 
 function applyToObject(rule: ObjectRule) {
   const keysArray = Object.keys(rule);
@@ -6,11 +7,14 @@ function applyToObject(rule: ObjectRule) {
   for (const key in rule.properties) {
     const ruleProp = rule.properties[key];
 
+    if (isPrimitiveKey(ruleProp)) return;
+
     // Recursive rule application
     if (ruleProp.type === ETypes.Array) applyToArray(ruleProp);
     else if (ruleProp.type === ETypes.Object) applyToObject(ruleProp);
 
     ruleProp.aliases?.forEach(alias => {
+      // TODO: Implement Error handling
       if (keysArray.includes(alias)) throw new Error('Repeated alias!');
       keysArray.push(alias);
 
@@ -21,8 +25,10 @@ function applyToObject(rule: ObjectRule) {
 }
 
 function applyToArray(rule: ArrayRule) {
+  if (isPrimitiveKey(rule.items)) return;
+
   if (rule.items.type === ETypes.Array) applyToArray(rule.items);
-  else applyToObject(rule.items);
+  else if (rule.items.type === ETypes.Object) applyToObject(rule.items);
 }
 
 // Transforms rule item with aliases

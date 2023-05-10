@@ -1,4 +1,4 @@
-import type { ArrayToParse, ObjectToParse, TypeMap } from "./types";
+import { type ArrayToParse, type ObjectToParse, type TypeMap, EParserTypes } from "./types";
 
 export function isArray(item: unknown): item is ArrayToParse {
   return Array.isArray(item);
@@ -8,6 +8,11 @@ export function isObject(item: unknown): item is ObjectToParse {
   return typeof item === 'object' && item !== null;
 }
 
-export function isPrimitive<TypeKey extends keyof TypeMap>(item: unknown, key: TypeKey): item is TypeMap[TypeKey] {
+export function isPrimitive(item: unknown, key: keyof TypeMap): boolean {
   return key === 'any' || typeof item === key;
 } 
+
+export function isPrimitiveKey(item: unknown): item is keyof TypeMap {
+  return typeof item === 'string' && 
+  Object.keys(EParserTypes).filter((key) => key === EParserTypes.Object || key === EParserTypes.Array).includes(item);
+}

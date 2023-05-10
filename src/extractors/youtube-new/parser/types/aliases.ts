@@ -9,15 +9,15 @@ type AliasesUnion<Prop extends PropertyRule> = PropAliases<Prop> extends readonl
     }[number]
   : never;
 
-type ApplyAliasToProp<Prop extends PropertyRule> = {
-  [Key in AliasesUnion<Prop>]: Prop;
+type ApplyAliasToProp<PropKeys extends string | number | symbol, Prop extends PropertyRule> = {
+  [Key in AliasesUnion<Prop>]: Key extends PropKeys ? never: Prop;
 };
 
 type AppliedRuleAliasesWithNever<Rule extends ObjectRule> = Omit<Rule, 'properties'> & {
   properties: RecursiveAliases<Rule> &
     UnionToIntersection<
       {
-        [Key in keyof ObjectRuleProps<Rule>]: ApplyAliasToProp<RecursiveAliases<Rule>[Key]>;
+        [Key in keyof ObjectRuleProps<Rule>]: ApplyAliasToProp<keyof ObjectRuleProps<Rule>, RecursiveAliases<Rule>[Key]>;
       }[keyof ObjectRuleProps<Rule>]
     >;
 };

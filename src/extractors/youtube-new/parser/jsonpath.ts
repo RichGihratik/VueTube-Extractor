@@ -16,7 +16,7 @@ export function parseBrackets(propKey: string): ParsedBrackets {
       ARRAY_SEP.slice()
                .reverse()
                .join('')
-      ).map(item => (isNaN(parseInt(item)) ? item : parseInt(item))
+      ).map(item => (isNaN(+item) ? item : +item)
     );
   }
 

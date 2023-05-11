@@ -4,9 +4,7 @@ import { isPrimitiveKey } from "./typeguards";
 function applyToObject(rule: ObjectRule) {
   const keysArray = Object.keys(rule);
 
-  for (const key in rule.properties) {
-    const ruleProp = rule.properties[key];
-
+  for (const ruleProp of Object.values(rule.properties)) {
     if (isPrimitiveKey(ruleProp)) continue;
 
     // Recursive rule application

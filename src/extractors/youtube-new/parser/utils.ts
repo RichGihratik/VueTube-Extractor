@@ -1,4 +1,4 @@
-// Util type that makes result of type intersection visible
+// Util type that makes result of type intersection visible in intellisense
 
 export type Expand<T> = T extends object
   ? T extends infer O

@@ -1,4 +1,4 @@
-import {arrayRule, objectRule} from "../types";
+import {arrayRule, objectRule} from "../types-old";
 import {ArrayRuleHelper, ObjectRuleHelper} from "../parserHelpers";
 
 describe("Helper Tests", () => {

@@ -85,5 +85,3 @@ export type ObjectPropertyRule  = ObjectRule & PropertyBase;
 type ArrayPropertyRule = ArrayRule & PropertyBase;
 
 export type PropertyRule = ArrayPropertyRule | ObjectPropertyRule | PrimitivePropertyRule | keyof TypeMap;
-
-export type ObjectRuleProps<Rule extends ObjectRule> = Rule['properties'];

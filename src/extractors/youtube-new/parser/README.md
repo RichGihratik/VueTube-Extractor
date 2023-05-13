@@ -4,13 +4,42 @@ This documentation for rewritten parser, based on the original rule concept, but
 
 ## Version changes
 
+### General
+
+- Add simple form of defining primitive properties
+- All possible supported types now accessed from enum to ensure typesafety and simplify changes, if strings are going to change
+- Changes to code structure: parser now separated to set of pipeline functions to make changes and extending parser easier
+- Correct type inference from const rules.
+
+### Arrays
+
+- Arrays now can have a primitive types as items
+- Implemented strict mode for arrays. Now if array is in strict mode, all items must be matched to items type, by default it is disabled
+
+### Subrules
+
 - Removed redundant `name` and `isDiscoverable` due to remapping and aliases support.
-- Aliases can now be applied to primitive properties as well.
 - Removed `rule` from property type, subrules now nested directly inside `properties`.
+
+### Aliases
+
+- Aliases can now be applied to primitive properties as well.
+- Default values and expected values are mutualy exclusive
+
+### JSONPath
+
+- Added multidimensional array support
+- Added string indexing using brackets on JSONPath notation
+
+### Conditions
+
 - Rule conditions now merged with properties, and expected value can now be defined inside property itself (currently only to primitives).
 - If object rule condition is not met - then it will be `undefined` instead of empty object.
+
+### Flatten
+
 - Flatten now can be used in both ways: it now can flatten the first level and subrules with `flatten: true` or flatten the whole object.
-- Correct type inference from const rules.
+
 
 ## What is rule?
 
@@ -53,7 +82,7 @@ let item = parse(obj, rule);
 //     ^--"item" will have type { prop1: string; prop2?: number; }
 ```
 
-Because rule has the object type which consists from concrete values (not `string`, but `'someStr'`), TypeScript can infer type of the return object as well. Under the hood, it uses conditional and remapped types, so value types are important. Without them, it cant determine, what rule is passed as parameter, and this may lead to type errors.
+Because rule has the object type which consists from concrete values (not `string`, but `'someStr'`), TypeScript can infer type of the return object as well. Under the hood, it uses conditional and remapped types, so defined values in type are important. Without them, it cant determine, what rule is passed as parameter, and this may lead to type errors.
 
 Currently, you can define only const rules with full type support, but I will work on the new `RuleBuilder`, which will provide more convinient way to work with rules in runtime. It still will be a way to work with only finite and known variations of the rule. For example, some situations involving user input or working with api can not be typed at all, so the type can not be inferred in `parse` function:
 
@@ -122,7 +151,7 @@ let item = parse(obj, rule);
 //        }
 ```
 
-Properties also supports nesting another rules and types, see [**Subrules**](##subrules)
+Properties also supports nesting another rules and types, see [**Subrules**](#subrules-rd)
 
 ## Optional Props [**RD**]
 
@@ -181,7 +210,7 @@ Please note that strict mode only applies inside object which applied to, it doe
 
 ## Default values [**NRD**]
 
-You can also define default values inside properties. This can also be applied to `required: true` properties when [**Strict mode**](##strict-mode) is disabled:
+You can also define default values inside properties. This can also be applied to `required: true` properties when [**Strict mode**](##strict-mode-rd) is disabled:
 
 ```typescript
 const rule = {

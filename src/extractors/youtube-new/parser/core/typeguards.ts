@@ -1,4 +1,4 @@
-import { type ArrayToParse, type ObjectToParse, type TypeMap, EParserTypes } from "./types";
+import { type TypeMap, EParserTypes, type ArrayToParse, type ObjectToParse  } from "./types";
 
 export function isArray(item: unknown): item is ArrayToParse {
   return Array.isArray(item);

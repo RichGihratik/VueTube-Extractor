@@ -1,4 +1,4 @@
-import {arrayRule, conditionalFunction, conditionalRule, objectRule, Rule} from "./types";
+import {arrayRule, conditionalFunction, conditionalRule, objectRule, Rule} from "./types-old";
 import {ErrorMessages, utilityErrors} from "@utils";
 
 /**

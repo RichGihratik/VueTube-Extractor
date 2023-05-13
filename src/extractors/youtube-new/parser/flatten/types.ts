@@ -1,8 +1,5 @@
-import type { ObjectRule, ObjectPropertyRule, ObjectRuleProps } from './common';
-import type { UnionToIntersection } from './utils';
-import type { PropRequired } from './required';
-import type { RuleStrictMode } from './strict';
-import type { HasCondition } from './condition';
+import type { ObjectRule, ObjectPropertyRule, ObjectRuleProps, PropRequired, RuleStrictMode, HasCondition} from '../core';
+import type { UnionToIntersection } from '../utils';
 
 // Helpers
 // ========================

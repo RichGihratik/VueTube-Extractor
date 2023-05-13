@@ -1,4 +1,4 @@
-import { arrayRule, conditionalFunction, conditionalRule, groupedRule, objectRule, propertyRule, Rule } from './types';
+import { arrayRule, conditionalFunction, conditionalRule, groupedRule, objectRule, propertyRule, Rule } from './types-old';
 import { ErrorMessages, utilityErrors } from '@utils';
 import { ArrayRuleHelper, ObjectRuleHelper } from './parserHelpers';
 import RuleFactory from '../rules';

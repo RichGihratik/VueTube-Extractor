@@ -1,5 +1,5 @@
 import ruleFactory from '../index';
-import { Rule } from '../../parser/types';
+import { Rule } from '../../parser/types-old';
 
 describe('ruleFactory tests', () => {
   let factory: ruleFactory;

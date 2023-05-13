@@ -1,8 +1,6 @@
-import type { ObjectRule, PropertyRule, ObjectRuleProps } from "./common";
-import type { IndexType } from "./appliedRule";
-import type { PropDefaultSet } from "./default";
-import type { RuleStrictMode } from "./strict";
-import type { PropRequired } from "./required";
+import type { ObjectRule, PropertyRule } from "./rule";
+import type { IndexType } from "../../appliedRule";
+import type { PropDefaultSet, RuleStrictMode, PropRequired, ObjectRuleProps } from "./propUtils";
 
 type PropNonNullable<Rule extends ObjectRule, Prop extends PropertyRule, KeyType> = PropDefaultSet<
   Prop, 

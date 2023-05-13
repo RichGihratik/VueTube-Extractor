@@ -1,14 +1,7 @@
-import { type Rule, EParserTypes } from "./common";
-import type { AppliedRule } from "./appliedRule";
+import { type Rule, EParserTypes } from './core';
+import type { AppliedRule } from './appliedRule';
 
 // Rewritten continuation rule from "../../rules/continuations.const.ts"
-
-const continuation = {
-  type: EParserTypes.Object,
-  properties: {
-    continuation: EParserTypes.String,
-  },
-} as const satisfies Rule;
 
 export const CONTINUATIONS = {
   type: EParserTypes.Array,
@@ -16,9 +9,12 @@ export const CONTINUATIONS = {
     type: EParserTypes.Object,
     properties: {
       nextContinuationData: {
-        ...continuation,
-        aliases: ['reloadContinuationData']
-      }
+        type: EParserTypes.Object,
+        aliases: ['reloadContinuationData'],
+        properties: {
+          continuation: EParserTypes.String,
+        },
+      },
     },
   },
 } as const satisfies Rule;
@@ -37,7 +33,7 @@ const subRule = {
       type: EParserTypes.Object,
       properties: {
         prop1: {
-          aliases: ['prop3'],
+          aliases: ['prop'],
           type: EParserTypes.String,
           default: 'someDefault',
         },
@@ -46,31 +42,33 @@ const subRule = {
           properties: {
             prop: {
               type: EParserTypes.Number,
-              default: 4
-            }
-          }
-        }
-      }
-    }
-  }
+              default: 4,
+            },
+          },
+        },
+      },
+    },
+  },
 } as const satisfies Rule;
 
 const rule = {
   type: EParserTypes.Object,
-  //flatten: true,
+  flatten: true,
   keymap: {
     continuation: 'remapedContuniation',
     nonPrimitive: 'remapedNonPrimitive',
   },
   properties: {
-    "obj.another.arr[0].obj": {
-      type: EParserTypes.String,
+    'obj.another.arr[0].obj': EParserTypes.String,
+    array: {
+      type: EParserTypes.Array,
+      items: EParserTypes.Number,
     },
     obj: {
       type: EParserTypes.Object,
       properties: {
-        prop: EParserTypes.Number
-      }
+        prop: EParserTypes.Number,
+      },
     },
     continuation: {
       aliases: ['contAlias'],

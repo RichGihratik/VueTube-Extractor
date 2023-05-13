@@ -1,5 +1,5 @@
-import type { ObjectRule, PropertyRule, ObjectRuleProps, PropertyBase } from './common';
-import type { UnionToIntersection, PickNever } from './utils';
+import type { ObjectRule, PropertyRule, ObjectRuleProps, PropertyBase } from '../core';
+import type { UnionToIntersection, PickNever } from '../utils';
 
 type PropAliases<Prop extends PropertyRule> = Prop extends PropertyBase ? Prop['aliases'] : never;
 

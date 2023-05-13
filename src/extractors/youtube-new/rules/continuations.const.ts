@@ -1,4 +1,4 @@
-import { Rule } from '../parser/types';
+import { Rule } from '../parser/types-old';
 
 export const CONTINUATIONS: Rule = {
   type: 'array',

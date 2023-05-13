@@ -1,5 +1,5 @@
 //imports here
-import { objectRule, Rule } from '../parser/types';
+import { objectRule, Rule } from '../parser/types-old';
 import { utilityErrors, ErrorMessages } from '@utils';
 import { CONTINUATIONS } from './continuations.const';
 //Put all imports into this array

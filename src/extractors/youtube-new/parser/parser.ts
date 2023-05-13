@@ -1,8 +1,9 @@
 import type { Rule, AppliedRule, ObjectToParse, ArrayToParse, PipelineItem, PipelineFn } from './types';
 
+import { parseProps } from './core';
+
 import { applyCondition } from './condition';
 import { applyAliases } from './aliases';
-import { parseProps } from './props';
 import { applyRemap } from './remap';
 import { applyFlatten } from './flatten';
 
@@ -16,7 +17,7 @@ const PIPELINE_FNS: PipelineFn[] = [
 ];
 
 export function parseToAny(item: ArrayToParse | ObjectToParse, rule: Rule): any {
-  let transformedItem: PipelineItem = { item, rule };
+  let transformedItem: PipelineItem = { item: structuredClone(item), rule: structuredClone(rule) };
   PIPELINE_FNS.forEach(fn => {
     transformedItem = fn(transformedItem);
   });

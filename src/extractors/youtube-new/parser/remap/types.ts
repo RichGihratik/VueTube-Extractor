@@ -1,6 +1,4 @@
-import type { ObjectRule, ObjectRuleProps } from "./common";
-
-type RuleKeymap<Rule extends ObjectRule> = Rule['keymap']; 
+import type { ObjectRule, ObjectRuleProps, RuleKeymap } from "../core"; 
 
 type RuleRemap<Rule extends ObjectRule> =
   Omit<Rule, 'properties'> & 

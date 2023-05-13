@@ -1,5 +1,4 @@
-import { type PipelineItem, type PipelineFn, type ArrayRule, type ObjectRule, EParserTypes as ETypes } from './types';
-import { isPrimitiveKey } from "./typeguards";
+import { type PipelineFn, type ArrayRule, type ObjectRule, EParserTypes as ETypes, isPrimitiveKey } from '../core';
 
 function applyToObject(rule: ObjectRule) {
   const keysArray = Object.keys(rule);
@@ -31,7 +30,7 @@ function applyToArray(rule: ArrayRule) {
 
 // Transforms rule item with aliases
 
-export const applyAliases: PipelineFn = function (item: PipelineItem) {
+export const applyAliases: PipelineFn = function (ctx, item) {
   const rule = structuredClone(item.rule);
   if (rule.type === ETypes.Array) applyToArray(rule);
   else applyToObject(rule);

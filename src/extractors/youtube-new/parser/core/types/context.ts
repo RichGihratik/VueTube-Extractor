@@ -1,18 +1,8 @@
-import type { Rule, ObjectRule, ArrayRule } from "./rule";
+import type { IRuleIterator } from "./iterator";
 
-export interface IRuleIteratorContext {
-  readonly key: string;
-  readonly fullPath: (string | number)[]
-  error(message: string): void; // Useful for multiple errors. Prevent further deep propagation
-  skip(): void; // Skips all the childs of current node
-  break(): void; // Prevents immediately even for current childs
-}
 
-export interface IRuleIterator {
-  visitObjectRule(ctx: IRuleIteratorContext, rule: ObjectRule): void;
-  visitArrayRule(ctx: IRuleIteratorContext, rule: ArrayRule): void;
-}
-
+// Collection of useful methods, also it makes possible to interact between different parts
+// of pipeline 
 export interface IPipelineContext {
-  traverseRule(iterator: IRuleIterator, rule: Rule): void;
+  createRuleIterator(): IRuleIterator;
 }
